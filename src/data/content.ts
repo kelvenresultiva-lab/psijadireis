@@ -92,19 +92,19 @@ export const specialties = {
   items: [
     {
       icon: "Flower2",
-      title: "Mulheres em sobrecarga e redescoberta",
+      title: "Terapia para mulheres em sobrecarga",
       description:
         "Por meio de sessões semanais, presenciais ou online, com cerca de 50 minutos de duração, acompanho mulheres em momentos de sobrecarga, ansiedade ou relações difíceis. Através da escuta clínica, é possível compreender a origem do que incomoda e caminhar, no seu próprio tempo, para um processo de redescoberta de si mesma.",
     },
     {
       icon: "Sparkle",
-      title: "Adolescentes e jovens",
+      title: "Terapia para adolescentes e jovens",
       description:
         "Adolescentes e jovens podem enfrentar dificuldades próprias dessa fase da vida, como ansiedade, insegurança e conflitos nas relações. Por meio do acompanhamento psicológico, presencial ou online, é possível desenvolver autoconhecimento, fortalecer a autoestima e lidar melhor com os desafios emocionais típicos da adolescência e da juventude.",
     },
     {
       icon: "Rainbow",
-      title: "Comunidade LGBTQIAPN+",
+      title: "Terapia para comunidade LGBTQIAPN+",
       description:
         "Adolescentes, adultos e idosos da comunidade LGBTQIAPN+ contam com um espaço de escuta ética, sigilosa e livre de julgamentos, presencial ou online. O acompanhamento psicológico caminha ao lado de cada pessoa na busca por autonomia, identidade e autoconhecimento, respeitando o tempo e a singularidade de cada processo.",
     },
