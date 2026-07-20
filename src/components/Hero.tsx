@@ -1,0 +1,107 @@
+import Image from "next/image";
+import { CheckCircle2, Flower2 } from "lucide-react";
+import { hero, heroMobile, whatsappLink } from "@/data/content";
+import Button from "@/components/Button";
+import Reveal from "@/components/Reveal";
+
+export default function Hero() {
+  return (
+    <section id="hero" className="relative isolate overflow-hidden">
+      {/* Mobile / tablet: foto no topo com esmaecimento para o fundo, texto centralizado abaixo. */}
+      <div className="lg:hidden">
+        <Reveal direction="up" className="relative aspect-[3/4] w-full sm:aspect-[4/5]">
+          <Image
+            src={heroMobile.image.src}
+            alt={heroMobile.image.alt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-top"
+          />
+        </Reveal>
+
+        <div className="bg-[#F4ECE0] px-6 pb-14 pt-2 text-center">
+          <Reveal direction="up" delay={100}>
+            <p className="font-lato text-[13px] font-semibold uppercase tracking-[2.3px] text-muted">
+              {heroMobile.eyebrow}
+            </p>
+            <h1 className="mt-3 font-playfair text-4xl font-semibold text-ink">
+              {heroMobile.title}
+            </h1>
+
+            <div className="mx-auto mt-5 flex w-full max-w-[220px] items-center justify-center gap-3">
+              <span className="h-px flex-1 bg-gold-bright/40" />
+              <Flower2 size={18} className="shrink-0 text-gold-bright" />
+              <span className="h-px flex-1 bg-gold-bright/40" />
+            </div>
+
+            <p className="mx-auto mt-5 max-w-xs font-heebo text-sm font-medium uppercase tracking-[1.5px] text-ink/80">
+              {heroMobile.tagline}
+            </p>
+
+            <div className="mt-7 flex justify-center">
+              <Button href={whatsappLink()}>{heroMobile.ctaLabel}</Button>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+
+      {/* Desktop: foto de fundo em tela cheia com texto sobreposto. */}
+      <div className="relative hidden bg-white lg:block">
+        <div className="absolute inset-0">
+          <Image
+            src={hero.image.src}
+            alt={hero.image.alt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[75%_30%]"
+          />
+        </div>
+
+        <div className="relative mx-auto flex max-w-[1140px] flex-col gap-6 px-6 pb-[380px] pt-28">
+          <Reveal direction="up">
+            <p className="font-lato text-[15px] font-semibold uppercase tracking-[2.3px] text-gold">
+              {hero.eyebrow}
+            </p>
+          </Reveal>
+
+          <Reveal direction="up" delay={100}>
+            <h1 className="max-w-2xl font-mosseta text-[56px] leading-[1.15] text-ink">
+              {hero.greeting} <span className="text-gold-bright">{hero.name}</span>
+            </h1>
+          </Reveal>
+
+          <Reveal direction="up" delay={200}>
+            <p className="max-w-md font-heebo text-base font-normal leading-relaxed text-ink">
+              {hero.subtitle}
+            </p>
+          </Reveal>
+
+          <Reveal direction="up" delay={300}>
+            <ul className="flex flex-col gap-3">
+              {hero.checklist.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <CheckCircle2
+                    size={18}
+                    className="mt-0.5 shrink-0 text-gold-bright"
+                  />
+                  <span className="font-heebo text-[15px] font-medium text-ink">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          <Reveal direction="up" delay={400} className="flex flex-wrap gap-4">
+            <Button href={whatsappLink()} variant="outline">
+              {hero.ctaLabel}
+            </Button>
+            <Button href={hero.ctaSecondaryHref}>{hero.ctaSecondaryLabel}</Button>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
