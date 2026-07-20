@@ -7,43 +7,48 @@ import Reveal from "@/components/Reveal";
 export default function Hero() {
   return (
     <section id="hero" className="relative isolate overflow-hidden">
-      {/* Mobile / tablet: foto no topo com esmaecimento para o fundo, texto centralizado abaixo. */}
-      <div className="lg:hidden">
-        <Reveal direction="up" className="relative aspect-[3/4] w-full sm:aspect-[4/5]">
-          <Image
-            src={heroMobile.image.src}
-            alt={heroMobile.image.alt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-top"
-          />
+      {/* Mobile / tablet: foto de corpo inteiro com o texto sobreposto na faixa
+          clara inferior. O fundo #F9F3EE é a cor para a qual a própria imagem
+          esmaece, então a emenda entre foto e seção fica invisível. */}
+      <div className="bg-[#F9F3EE] lg:hidden">
+        <Image
+          src={heroMobile.image.src}
+          alt={heroMobile.image.alt}
+          width={941}
+          height={1672}
+          priority
+          sizes="100vw"
+          className="h-auto w-full"
+        />
+
+        {/* -30% da largura sobe o texto até ~83% da altura da foto, já na área
+            esmaecida; como a margem é proporcional à largura (assim como a
+            altura da imagem), o alinhamento se mantém em qualquer tela. */}
+        <Reveal
+          direction="up"
+          className="relative -mt-[30%] px-6 pb-14 text-center"
+        >
+          <p className="font-lato text-[13px] font-semibold uppercase tracking-[2.3px] text-muted">
+            {heroMobile.eyebrow}
+          </p>
+          <h1 className="mt-3 font-playfair text-4xl font-semibold text-ink">
+            {heroMobile.title}
+          </h1>
+
+          <div className="mx-auto mt-5 flex w-full max-w-[220px] items-center justify-center gap-3">
+            <span className="h-px flex-1 bg-gold-bright/40" />
+            <Flower2 size={18} className="shrink-0 text-gold-bright" />
+            <span className="h-px flex-1 bg-gold-bright/40" />
+          </div>
+
+          <p className="mx-auto mt-5 max-w-xs font-heebo text-sm font-medium uppercase tracking-[1.5px] text-ink/80">
+            {heroMobile.tagline}
+          </p>
+
+          <div className="mt-7 flex justify-center">
+            <Button href={whatsappLink()}>{heroMobile.ctaLabel}</Button>
+          </div>
         </Reveal>
-
-        <div className="bg-[#F4ECE0] px-6 pb-14 pt-2 text-center">
-          <Reveal direction="up" delay={100}>
-            <p className="font-lato text-[13px] font-semibold uppercase tracking-[2.3px] text-muted">
-              {heroMobile.eyebrow}
-            </p>
-            <h1 className="mt-3 font-playfair text-4xl font-semibold text-ink">
-              {heroMobile.title}
-            </h1>
-
-            <div className="mx-auto mt-5 flex w-full max-w-[220px] items-center justify-center gap-3">
-              <span className="h-px flex-1 bg-gold-bright/40" />
-              <Flower2 size={18} className="shrink-0 text-gold-bright" />
-              <span className="h-px flex-1 bg-gold-bright/40" />
-            </div>
-
-            <p className="mx-auto mt-5 max-w-xs font-heebo text-sm font-medium uppercase tracking-[1.5px] text-ink/80">
-              {heroMobile.tagline}
-            </p>
-
-            <div className="mt-7 flex justify-center">
-              <Button href={whatsappLink()}>{heroMobile.ctaLabel}</Button>
-            </div>
-          </Reveal>
-        </div>
       </div>
 
       {/* Desktop: foto de fundo em tela cheia com texto sobreposto. */}
