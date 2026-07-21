@@ -1,14 +1,14 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
  * Carrossel horizontal.
  *
- * No toque, quem rola é o próprio navegador (overflow-x + touch-action padrão),
- * o que preserva a inércia nativa. O JS abaixo existe só para permitir arrastar
- * com o mouse no desktop, onde não há gesto de swipe — por isso todo handler
- * ignora ponteiros que não sejam mouse.
+ * No celular (sem mouse), o componente é um contêiner de rolagem nativa puro,
+ * sem nenhum handler de JS — assim o swipe do dedo usa a rolagem do próprio
+ * navegador, com inércia, e nada pode interferir. O arrasto com o mouse (JS)
+ * só é anexado em dispositivos que têm um ponteiro fino (mouse/trackpad).
  */
 export default function DragScroll({
   children,
@@ -18,8 +18,14 @@ export default function DragScroll({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [enableMouseDrag, setEnableMouseDrag] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const drag = useRef({ active: false, startX: 0, scrollLeft: 0, moved: false });
+
+  useEffect(() => {
+    // só habilita o arrasto por mouse onde existe um ponteiro fino (desktop)
+    setEnableMouseDrag(window.matchMedia("(pointer: fine)").matches);
+  }, []);
 
   const onPointerDown = (e: React.PointerEvent) => {
     const el = ref.current;
@@ -34,7 +40,7 @@ export default function DragScroll({
     try {
       el.setPointerCapture(e.pointerId);
     } catch {
-      // pointer capture can legitimately fail (e.g. already captured elsewhere)
+      // pointer capture pode falhar legitimamente (ex.: já capturado)
     }
   };
 
@@ -51,23 +57,29 @@ export default function DragScroll({
     setIsDragging(false);
   };
 
+  const mouseHandlers = enableMouseDrag
+    ? {
+        onPointerDown,
+        onPointerMove,
+        onPointerUp: endDrag,
+        onPointerCancel: endDrag,
+        onPointerLeave: endDrag,
+        onClickCapture: (e: React.MouseEvent) => {
+          // impede que soltar o arrasto sobre um link dispare a navegação
+          if (drag.current.moved) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        },
+      }
+    : {};
+
   return (
     <div
       ref={ref}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={endDrag}
-      onPointerCancel={endDrag}
-      onPointerLeave={endDrag}
-      onClickCapture={(e) => {
-        // impede que soltar o arrasto sobre um link dispare a navegação
-        if (drag.current.moved) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      }}
+      {...mouseHandlers}
       className={`scrollbar-none flex overflow-x-auto ${
-        isDragging ? "cursor-grabbing select-none" : "cursor-grab"
+        enableMouseDrag ? (isDragging ? "cursor-grabbing select-none" : "cursor-grab") : ""
       } ${className}`}
     >
       {children}
