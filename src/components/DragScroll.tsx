@@ -2,6 +2,14 @@
 
 import { useRef, useState, type ReactNode } from "react";
 
+/**
+ * Carrossel horizontal.
+ *
+ * No toque, quem rola é o próprio navegador (overflow-x + touch-action padrão),
+ * o que preserva a inércia nativa. O JS abaixo existe só para permitir arrastar
+ * com o mouse no desktop, onde não há gesto de swipe — por isso todo handler
+ * ignora ponteiros que não sejam mouse.
+ */
 export default function DragScroll({
   children,
   className = "",
@@ -15,7 +23,7 @@ export default function DragScroll({
 
   const onPointerDown = (e: React.PointerEvent) => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || e.pointerType !== "mouse") return;
     drag.current = {
       active: true,
       startX: e.clientX,
@@ -32,7 +40,7 @@ export default function DragScroll({
 
   const onPointerMove = (e: React.PointerEvent) => {
     const el = ref.current;
-    if (!el || !drag.current.active) return;
+    if (!el || !drag.current.active || e.pointerType !== "mouse") return;
     const delta = e.clientX - drag.current.startX;
     if (Math.abs(delta) > 3) drag.current.moved = true;
     el.scrollLeft = drag.current.scrollLeft - delta;
@@ -52,12 +60,13 @@ export default function DragScroll({
       onPointerCancel={endDrag}
       onPointerLeave={endDrag}
       onClickCapture={(e) => {
+        // impede que soltar o arrasto sobre um link dispare a navegação
         if (drag.current.moved) {
           e.preventDefault();
           e.stopPropagation();
         }
       }}
-      className={`scrollbar-none flex overflow-x-auto touch-pan-y ${
+      className={`scrollbar-none flex overflow-x-auto ${
         isDragging ? "cursor-grabbing select-none" : "cursor-grab"
       } ${className}`}
     >
