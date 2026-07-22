@@ -47,6 +47,24 @@ export const nav = [
   { label: "FAQ", href: "#faq" },
 ] as const;
 
+// Monograma "JR" da Jadi. A arte original é branca; a versão escura foi gerada
+// invertendo a cor (mesmo traço, para uso sobre fundos claros). Ambas recortadas
+// e com fundo transparente.
+export const brand = {
+  logoDark: {
+    src: "/logo-jadi-escura.png",
+    alt: "Logo Jadi Reis",
+    width: 445,
+    height: 373,
+  },
+  logoLight: {
+    src: "/logo-jadi-branca.png",
+    alt: "Logo Jadi Reis",
+    width: 445,
+    height: 373,
+  },
+} as const;
+
 export const header = {
   ctaLabel: "Vamos conversar?",
 } as const;

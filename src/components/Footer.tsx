@@ -1,5 +1,6 @@
+import Image from "next/image";
 import { AtSign } from "lucide-react";
-import { footer, nav, site, whatsappLink } from "@/data/content";
+import { brand, footer, nav, site, whatsappLink } from "@/data/content";
 import Button from "@/components/Button";
 
 export default function Footer() {
@@ -7,7 +8,14 @@ export default function Footer() {
     <footer id="contato" className="bg-dark py-16 text-white/70">
       <div className="mx-auto grid max-w-[1140px] grid-cols-1 gap-10 px-6 sm:grid-cols-3">
         <div>
-          <h3 className="font-mosseta text-2xl text-white">{site.name}</h3>
+          <Image
+            src={brand.logoLight.src}
+            alt={brand.logoLight.alt}
+            width={brand.logoLight.width}
+            height={brand.logoLight.height}
+            className="h-16 w-auto"
+          />
+          <h3 className="mt-4 font-mosseta text-2xl text-white">{site.name}</h3>
           <p className="mt-2 font-lato text-sm uppercase tracking-[1px] text-gold">
             {site.role}
           </p>
