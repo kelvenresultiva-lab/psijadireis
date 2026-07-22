@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer id="contato" className="bg-dark py-16 text-white/70">
       <div className="mx-auto grid max-w-[1140px] grid-cols-1 gap-10 px-6 sm:grid-cols-3">
-        <div>
+        <div className="flex flex-col items-center text-center sm:items-start sm:text-left">
           <Image
             src={brand.logoLight.src}
             alt={brand.logoLight.alt}
@@ -33,7 +33,7 @@ export default function Footer() {
           </a>
         </div>
 
-        <div>
+        <div className="flex flex-col items-center text-center sm:items-start sm:text-left">
           <h4 className="font-playfair text-lg font-semibold text-white">
             {footer.quickLinksTitle}
           </h4>
@@ -51,7 +51,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className="flex flex-col items-center text-center sm:items-start sm:text-left">
           <h4 className="font-playfair text-lg font-semibold text-white">
             {footer.hoursTitle}
           </h4>
@@ -71,7 +71,9 @@ export default function Footer() {
       </div>
 
       <div className="mx-auto mt-12 max-w-[1140px] border-t border-white/10 px-6 pt-6">
-        <p className="font-lato text-xs text-white/40">{footer.rightsText}</p>
+        <p className="text-center font-lato text-xs text-white/40 sm:text-left">
+          {footer.rightsText}
+        </p>
       </div>
     </footer>
   );

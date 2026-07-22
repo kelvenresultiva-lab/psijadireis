@@ -32,9 +32,40 @@ const heebo = Heebo({
   weight: ["300", "400", "500", "700"],
 });
 
+// Na Vercel, VERCEL_PROJECT_PRODUCTION_URL traz o domínio de produção
+// automaticamente; localmente cai no localhost. Necessário para que a
+// URL da og:image seja absoluta (exigência do WhatsApp/redes sociais).
+const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "http://localhost:3000";
+
+const pageTitle = `${site.name} | Psicóloga Clínica em ${site.city}`;
+
 export const metadata: Metadata = {
-  title: `${site.name} | Psicóloga Clínica em ${site.city}`,
+  metadataBase: new URL(siteUrl),
+  title: pageTitle,
   description: site.metaDescription,
+  openGraph: {
+    title: pageTitle,
+    description: site.metaDescription,
+    siteName: site.name,
+    locale: "pt_BR",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: `Logo ${site.name}`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: pageTitle,
+    description: site.metaDescription,
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
